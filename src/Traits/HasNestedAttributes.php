@@ -99,19 +99,19 @@ trait HasNestedAttributes
                     }
                 } else {
                     if ($relation instanceof HasMany || $relation instanceof MorphMany) {
-//                        $modelRelation = $this->$methodName();
-//                        $relatedKeyName = $relation->getRelated()->getKeyName();
-//                        $idsArray = array_map(function ($stack) use ($relatedKeyName) {
-//                            return isset($stack[$relatedKeyName]) ? $stack[$relatedKeyName] : false;
-//                        }, $stack);
-//                        $idsNotDelete = array_filter($idsArray);
-//
-//                        //Syncing one-to-many relationships
-//                        if (count($idsNotDelete) > 0) {
-//                            $relation->whereNotIn($relatedKeyName, $idsNotDelete)->delete();
-//                        } else {
-//                            $relation->delete();
-//                        }
+                       $modelRelation = $this->$methodName();
+                       $relatedKeyName = $relation->getRelated()->getKeyName();
+                       $idsArray = array_map(function ($stack) use ($relatedKeyName) {
+                           return isset($stack[$relatedKeyName]) ? $stack[$relatedKeyName] : false;
+                       }, $stack);
+                       $idsNotDelete = array_filter($idsArray);
+
+                       //Syncing one-to-many relationships
+                       if (count($idsNotDelete) > 0) {
+                           $relation->whereNotIn($relatedKeyName, $idsNotDelete)->delete();
+                       } else {
+                           $relation->delete();
+                       }
                         foreach ($stack as $params) {
                             if (!$this->saveManyNestedAttributes($this->$methodName(), $params)) {
                                 return false;
